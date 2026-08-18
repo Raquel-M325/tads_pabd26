@@ -6,7 +6,7 @@ create table funcionario(
     pnome varchar(50) not null,
     unome varchar(50) not null,
     email varchar(50) unique,
-    endereco varchar(100),
+    endereco varchar(100) default 'Macau-RN',
     salario numeric(7,2),
     data_nasc date,
     sexo char(1),
@@ -71,3 +71,21 @@ on delete no action
 on update cascade;
 
 -- TO DO: adicionar restrições FK para cpf_supevisor e cpf_gerente
+
+
+alter table funcionario
+add constraint funcionario_cpf_sup_fk
+foreign key (cpf_supervisor)
+references funcionario(cpf)
+-- no action, set null, restrict, cascade, set default
+on delete set null
+on update cascade;
+
+
+alter table departamento
+add constraint departamento_cpf_gerente_fk
+foreign key (cpf_gerente)
+references funcionario(cpf)
+-- no action, set null, restrict, cascade, set default
+on delete set null
+on update cascade;
